@@ -1,6 +1,6 @@
 # Advent of Code 2021
 
-This is my [AoC'20](https://adventofcode.com/2021) project.
+This is my [AoC'21](https://adventofcode.com/2021) project.
 
 I'm doing this with a few objectives in mind:
 
