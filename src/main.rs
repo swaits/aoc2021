@@ -13,13 +13,7 @@ fn read_file(filename: &str) -> Result<String> {
 }
 
 fn count_incrementing_windows(window: usize, v: &[i64]) -> usize {
-    // create an array of the window sums and then window(2) that array to count increments
-    v.windows(window)
-        .map(|w| w.iter().sum())
-        .collect::<Vec<i64>>()
-        .windows(2)
-        .filter(|s| s[1] > s[0])
-        .count()
+    v[window..].iter().zip(v).filter(|(b, a)| b > a).count()
 }
 
 fn day01() -> Result<(usize, usize)> {
