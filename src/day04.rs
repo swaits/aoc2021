@@ -59,7 +59,7 @@ fn find_winning_score(s: &str, first: bool) -> usize {
                 }
                 if test_for_win(markers[i]) {
                     boards_won[i] = true;
-                    if first || (!first && boards_won.iter().all(|w| *w)) {
+                    if first || boards_won.iter().all(|w| *w) {
                         return compute_score(&bingo.boards[i], markers[i], draw);
                     }
                 }
