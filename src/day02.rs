@@ -1,4 +1,3 @@
-use crate::utils::read_file;
 use anyhow::Result;
 
 fn parse_line(s: &str) -> (&str, i32) {
@@ -34,7 +33,7 @@ fn follow_course_better(s: &str) -> i32 {
 }
 
 pub(crate) fn run() -> Result<(usize, usize)> {
-    let input = read_file("data/day02.txt")?;
+    let input = include_str!("../data/day02.txt");
     Ok((
         follow_course(&input) as usize,
         follow_course_better(&input) as usize,
@@ -47,15 +46,15 @@ mod tests {
 
     #[test]
     fn test_example() {
-        let input = read_file("data/day02-test.txt").unwrap();
-        assert_eq!(follow_course(&input), 150);
-        assert_eq!(follow_course_better(&input), 900);
+        let input = include_str!("../data/day02-test.txt");
+        assert_eq!(follow_course(input), 150);
+        assert_eq!(follow_course_better(input), 900);
     }
 
     #[test]
     fn test_my_data() {
-        let input = read_file("data/day02.txt").unwrap();
-        assert_eq!(follow_course(&input), 2070300);
-        assert_eq!(follow_course_better(&input), 2078985210);
+        let input = include_str!("../data/day02.txt");
+        assert_eq!(follow_course(input), 2070300);
+        assert_eq!(follow_course_better(input), 2078985210);
     }
 }

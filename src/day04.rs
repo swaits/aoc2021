@@ -1,4 +1,3 @@
-use crate::utils::read_file;
 use anyhow::Result;
 
 #[derive(Debug)]
@@ -70,10 +69,10 @@ fn find_winning_score(s: &str, first: bool) -> usize {
 }
 
 pub(crate) fn run() -> Result<(usize, usize)> {
-    let input = read_file("data/day04.txt")?;
+    let input = include_str!("../data/day04.txt");
     Ok((
-        find_winning_score(&input, true),
-        find_winning_score(&input, false),
+        find_winning_score(input, true),
+        find_winning_score(input, false),
     ))
 }
 #[cfg(test)]
@@ -82,14 +81,14 @@ mod tests {
 
     #[test]
     fn test_example() {
-        let input = read_file("data/day04-test.txt").unwrap();
+        let input = include_str!("../data/day04-test.txt");
         assert_eq!(find_winning_score(&input, true), 4512);
         assert_eq!(find_winning_score(&input, false), 1924);
     }
 
     #[test]
     fn test_my_data() {
-        let input = read_file("data/day04.txt").unwrap();
+        let input = include_str!("../data/day04.txt");
         assert_eq!(find_winning_score(&input, true), 71708);
         assert_eq!(find_winning_score(&input, false), 34726);
     }
