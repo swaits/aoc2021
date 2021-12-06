@@ -89,7 +89,7 @@ fn diagnose_lifesupport(s: &str) -> usize {
 
 pub(crate) fn run() -> Result<(usize, usize)> {
     let input = include_str!("../data/day03.txt");
-    Ok((diagnose_power(&input), diagnose_lifesupport(&input)))
+    Ok((diagnose_power(input), diagnose_lifesupport(input)))
 }
 
 #[cfg(test)]
@@ -99,15 +99,14 @@ mod tests {
     #[test]
     fn test_example() {
         let input = include_str!("../data/day03-test.txt");
-        assert_eq!(diagnose_power(&input), 198);
-        assert_eq!(diagnose_lifesupport(&input), 230);
+        assert_eq!(diagnose_power(input), 198);
+        assert_eq!(diagnose_lifesupport(input), 230);
     }
 
     #[test]
     fn test_my_data() {
         let input = include_str!("../data/day03.txt");
-        assert_eq!(diagnose_power(&input), 4191876);
-        // assert_eq!(follow_course(&input), 2070300);
-        // assert_eq!(follow_course_better(&input), 2078985210);
+        assert_eq!(diagnose_power(input), 4191876);
+        assert_eq!(diagnose_lifesupport(input), 3414905);
     }
 }

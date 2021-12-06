@@ -35,8 +35,8 @@ fn follow_course_better(s: &str) -> i32 {
 pub(crate) fn run() -> Result<(usize, usize)> {
     let input = include_str!("../data/day02.txt");
     Ok((
-        follow_course(&input) as usize,
-        follow_course_better(&input) as usize,
+        follow_course(input) as usize,
+        follow_course_better(input) as usize,
     ))
 }
 

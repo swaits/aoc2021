@@ -82,14 +82,14 @@ mod tests {
     #[test]
     fn test_example() {
         let input = include_str!("../data/day04-test.txt");
-        assert_eq!(find_winning_score(&input, true), 4512);
-        assert_eq!(find_winning_score(&input, false), 1924);
+        assert_eq!(find_winning_score(input, true), 4512);
+        assert_eq!(find_winning_score(input, false), 1924);
     }
 
     #[test]
     fn test_my_data() {
         let input = include_str!("../data/day04.txt");
-        assert_eq!(find_winning_score(&input, true), 71708);
-        assert_eq!(find_winning_score(&input, false), 34726);
+        assert_eq!(find_winning_score(input, true), 71708);
+        assert_eq!(find_winning_score(input, false), 34726);
     }
 }
