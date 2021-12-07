@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
+cached = "0.26.2"
 itertools = "0.10.1"
