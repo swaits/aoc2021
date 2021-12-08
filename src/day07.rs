@@ -24,7 +24,8 @@ fn compute_fuel(positions: &[isize], target: isize, cheap_fuel: bool) -> usize {
 
 fn find_cheapest_location(positions: &[isize], cheap_fuel: bool) -> usize {
     // find start point
-    let mut position = get_median(positions);
+    let start = get_median(positions);
+    let mut position = start;
     let mut fuel = compute_fuel(positions, position, cheap_fuel);
 
     // search up
@@ -35,6 +36,9 @@ fn find_cheapest_location(positions: &[isize], cheap_fuel: bool) -> usize {
         }
         position += 1;
         fuel = new_fuel;
+    }
+    if position != start {
+        return fuel;
     }
 
     // search down

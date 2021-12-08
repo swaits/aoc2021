@@ -9,3 +9,8 @@ edition = "2021"
 anyhow = "1.0"
 cached = "0.26.2"
 itertools = "0.10.1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

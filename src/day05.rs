@@ -12,17 +12,40 @@ impl LineSegment {
         self.start.0 == self.end.0 || self.start.1 == self.end.1
     }
 
-    fn rasterize(&self) -> Vec<(isize, isize)> {
-        let xstep = (self.end.0 - self.start.0).signum();
-        let ystep = (self.end.1 - self.start.1).signum();
-        let mut ret = vec![self.start];
-        let (mut x, mut y) = self.start;
-        while (x, y) != self.end {
-            x += xstep;
-            y += ystep;
-            ret.push((x, y));
+    fn rasterize(&self) -> LineSegmentPixelIter {
+        let dx = self.end.0 - self.start.0;
+        let dy = self.end.1 - self.start.1;
+        LineSegmentPixelIter {
+            x: self.start.0,
+            y: self.start.1,
+            xstep: dx.signum(),
+            ystep: dy.signum(),
+            length: dx.abs().max(dy.abs()) + 1,
+            i: 0,
         }
-        ret
+    }
+}
+
+struct LineSegmentPixelIter {
+    x: isize,
+    y: isize,
+    xstep: isize,
+    ystep: isize,
+    length: isize,
+    i: isize,
+}
+
+impl Iterator for LineSegmentPixelIter {
+    type Item = (isize, isize);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.i < self.length {
+            let ret = (self.x + self.i * self.xstep, self.y + self.i * self.ystep);
+            self.i += 1;
+            Some(ret)
+        } else {
+            None
+        }
     }
 }
 
@@ -50,21 +73,23 @@ fn parse_lines(input: &str) -> Vec<LineSegment> {
 }
 
 fn count_overlapped_cells(segments: &[LineSegment], includ_diag: bool) -> usize {
-    let mut marks: Vec<(isize, isize)> = segments
+    let mut cells: Vec<Vec<usize>> = vec![vec![0; 1000]; 1000];
+    segments
         .iter()
         .filter(|s| s.is_horizontal_or_vertical() || includ_diag)
-        .map(|s| s.rasterize())
-        .flatten()
-        .collect();
-    // sort so we can find duplicates
-    // **NOTE** IterTools has `.duplicates()` but it's significantly slower (more than 2x) than this
-    marks.sort_unstable();
-    marks[..]
-        .iter()
-        .zip(&marks[1..])
-        .filter(|(a, b)| a == b)
-        .unique()
-        .count()
+        .map(|s| {
+            s.rasterize()
+                .map(|(x, y)| -> usize {
+                    cells[x as usize][y as usize] += 1;
+                    if cells[x as usize][y as usize] == 2 {
+                        1
+                    } else {
+                        0
+                    }
+                })
+                .sum::<usize>()
+        })
+        .sum::<usize>()
 }
 
 pub(crate) fn run() -> Result<(usize, usize)> {

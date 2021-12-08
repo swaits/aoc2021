@@ -1,3 +1,5 @@
+use std::env;
+
 use anyhow::Result;
 
 mod day01;
@@ -9,19 +11,32 @@ mod day06;
 mod day07;
 mod utils;
 
-fn main() -> Result<()> {
-    let dayfns = [
-        day01::run,
-        day02::run,
-        day03::run,
-        day04::run,
-        day05::run,
-        day06::run,
-        day07::run,
-    ];
+// used to generate more runs when profiling
+const RUNS: usize = 1;
 
-    for (i, f) in dayfns.iter().enumerate() {
-        println!("Day {:02} -> {:?}", i, f()?);
+fn main() -> Result<()> {
+    let args: Vec<String> = env::args().collect();
+
+    for _ in 0..RUNS {
+        for (i, f) in [
+            day01::run,
+            day02::run,
+            day03::run,
+            day04::run,
+            day05::run,
+            day06::run,
+            day07::run,
+        ]
+        .iter()
+        .enumerate()
+        {
+            if args.len() == 1 || args.contains(&(i + 1).to_string()) {
+                let result = f()?;
+                if RUNS == 1 {
+                    println!("Day {:02} -> {:?}", i + 1, result);
+                }
+            }
+        }
     }
 
     Ok(())

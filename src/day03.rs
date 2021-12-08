@@ -39,8 +39,8 @@ fn find_oxygen_or_co2(s: &str, oxygen: bool) -> usize {
             .rev()
             .map(|bit| {
                 // split current set into ones/zeroes for current bit
-                let mut ones = vec![];
-                let mut zeroes = vec![];
+                let mut ones = Vec::with_capacity(kept.len());
+                let mut zeroes = Vec::with_capacity(kept.len());
                 kept.iter().for_each(|x| {
                     if x & (1 << bit) != 0 {
                         ones.push(*x);

@@ -1,18 +1,23 @@
 use anyhow::Result;
 
-fn parse_line(s: &str) -> (&str, i32) {
-    let parsed: Vec<&str> = s.splitn(2, ' ').collect();
-    let instruction = parsed[0];
-    let quantity = parsed[1].parse::<i32>().unwrap();
+fn parse_line(s: &str) -> (char, i32) {
+    let mut parsed = s.split_ascii_whitespace();
+    let instruction = match parsed.next().unwrap() {
+        "forward" => 'f',
+        "down" => 'd',
+        "up" => 'u',
+        _ => unreachable!(),
+    };
+    let quantity = parsed.next().unwrap().parse::<i32>().unwrap();
     (instruction, quantity)
 }
 
 fn follow_course(s: &str) -> i32 {
     let (mut pos, mut depth) = (0, 0);
     s.lines().for_each(|line| match parse_line(line) {
-        ("forward", d) => pos += d,
-        ("down", d) => depth += d,
-        ("up", d) => depth -= d,
+        ('f', d) => pos += d,
+        ('d', d) => depth += d,
+        ('u', d) => depth -= d,
         _ => unreachable!(),
     });
     pos * depth
@@ -21,12 +26,12 @@ fn follow_course(s: &str) -> i32 {
 fn follow_course_better(s: &str) -> i32 {
     let (mut pos, mut depth, mut aim) = (0, 0, 0);
     s.lines().for_each(|line| match parse_line(line) {
-        ("forward", d) => {
+        ('f', d) => {
             pos += d;
             depth += aim * d;
         }
-        ("down", d) => aim += d,
-        ("up", d) => aim -= d,
+        ('d', d) => aim += d,
+        ('u', d) => aim -= d,
         _ => unreachable!(),
     });
     pos * depth
