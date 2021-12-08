@@ -6,6 +6,7 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 mod utils;
 
 fn main() -> Result<()> {
@@ -15,5 +16,6 @@ fn main() -> Result<()> {
     println!("day04: {:?}", day04::run()?);
     println!("day05: {:?}", day05::run()?);
     println!("day06: {:?}", day06::run()?);
+    println!("day07: {:?}", day07::run()?);
     Ok(())
 }
