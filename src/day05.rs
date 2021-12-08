@@ -77,19 +77,16 @@ fn count_overlapped_cells(segments: &[LineSegment], includ_diag: bool) -> usize 
     segments
         .iter()
         .filter(|s| s.is_horizontal_or_vertical() || includ_diag)
-        .map(|s| {
-            s.rasterize()
-                .map(|(x, y)| -> usize {
-                    cells[x as usize][y as usize] += 1;
-                    if cells[x as usize][y as usize] == 2 {
-                        1
-                    } else {
-                        0
-                    }
-                })
-                .sum::<usize>()
+        .fold(0, |acc, s| {
+            acc + s.rasterize().fold(0, |acc, (x, y)| -> usize {
+                cells[x as usize][y as usize] += 1;
+                if cells[x as usize][y as usize] == 2 {
+                    acc + 1
+                } else {
+                    acc
+                }
+            })
         })
-        .sum::<usize>()
 }
 
 pub(crate) fn run() -> Result<(usize, usize)> {
