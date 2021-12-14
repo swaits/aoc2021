@@ -160,7 +160,8 @@ mod tests {
 
     #[test]
     fn test_my_data() {
-        let heightmap = HeightMap::parse(include_str!("../data/day09.txt")).unwrap();
+        let mut heightmap = HeightMap::parse(include_str!("../data/day09.txt")).unwrap();
         assert_eq!(sum_low_points(&heightmap), 504);
+        assert_eq!(sum_top3_basins(&mut heightmap), 1558722);
     }
 }
