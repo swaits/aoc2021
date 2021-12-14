@@ -5,7 +5,11 @@ use itertools::Itertools;
 // NOTE: this is O(n^2), but our input is tiny
 //       a HashSet is better complexity, but the allocations will hurt us
 fn shared_chars(a: &str, b: &str) -> usize {
-    a.chars().filter(|c| b.contains(&c.to_string())).count()
+    if a.len() < b.len() {
+        a.chars().filter(|ch| b.contains(&ch.to_string())).count()
+    } else {
+        b.chars().filter(|ch| a.contains(&ch.to_string())).count()
+    }
 }
 
 // decode a set of 10 input + 4 output characters and return the output
