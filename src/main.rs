@@ -11,6 +11,7 @@ mod day06;
 mod day07;
 mod day08;
 mod day09;
+mod day10;
 mod utils;
 
 // used to generate more runs when profiling
@@ -30,6 +31,7 @@ fn main() -> Result<()> {
             day07::run,
             day08::run,
             day09::run,
+            day10::run,
         ]
         .iter()
         .enumerate()
